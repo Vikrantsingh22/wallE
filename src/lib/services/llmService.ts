@@ -29,7 +29,6 @@ export class LLMService {
       temperature: 1,
       top_p: 1,
     });
-
     return completion.choices?.[0]?.message?.content || "No insights.";
   }
 

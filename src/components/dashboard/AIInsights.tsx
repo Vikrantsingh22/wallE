@@ -15,13 +15,90 @@ export default function AIInsights({
   const [showRoast, setShowRoast] = useState(false);
   const [roastContent, setRoastContent] = useState<string>("");
   const [isLoadingRoast, setIsLoadingRoast] = useState(false);
+  // Parse insights safely with detailed logging
+  const parseInsights = (insightsString: string) => {
+    console.log("🔍 Raw insights received:", insightsString);
+    console.log("🔍 Insights type:", typeof insightsString);
+
+    if (!insightsString) {
+      console.log("❌ No insights provided");
+      return { mainInsights: "No insights available", roast: "" };
+    }
+
+    try {
+      // If insights is already an object, return it
+      if (typeof insightsString === "object") {
+        console.log("✅ Insights already parsed:", insightsString);
+        const insightsObj = insightsString as any;
+        return {
+          mainInsights: JSON.stringify(insightsString, null, 2),
+          roast: insightsObj.Roast || "",
+        };
+      }
+
+      // Try to parse as JSON
+      const parsed = JSON.parse(insightsString);
+      console.log("✅ Successfully parsed insights:", parsed);
+
+      // Format the insights for display
+      const mainInsightsText = Object.entries(parsed)
+        .filter(([key]) => key !== "Roast")
+        .map(([key, value]) => `**${key}:**\n${value}`)
+        .join("\n\n");
+
+      return {
+        mainInsights: mainInsightsText || "No insights available",
+        roast: parsed.Roast || "",
+      };
+    } catch (error) {
+      console.error("❌ Failed to parse insights JSON:", error);
+      console.log("🔍 Problematic insights string:", insightsString);
+
+      // Try to clean up common JSON issues and parse again
+      try {
+        const cleaned = insightsString
+          .replace(/\n/g, " ") // Remove newlines
+          .replace(/\.\",/g, '",') // Fix malformed endings like ."
+          .replace(/,\s*}/g, "}") // Remove trailing commas
+          .replace(/,\s*]/g, "]") // Remove trailing commas in arrays
+          .replace(/no0/g, "no") // Fix specific typo
+          .replace(/insightsinsights/g, "insights") // Fix duplicated text
+          .replace(/P&L\.to start/g, "P&L. To start") // Fix concatenated text
+          .trim();
+
+        console.log("🔧 Attempting to parse cleaned JSON:", cleaned);
+        const cleanedParsed = JSON.parse(cleaned);
+        console.log("✅ Successfully parsed cleaned insights:", cleanedParsed);
+
+        const mainInsightsText = Object.entries(cleanedParsed)
+          .filter(([key]) => key !== "Roast")
+          .map(([key, value]) => `**${key}:**\n${value}`)
+          .join("\n\n");
+
+        return {
+          mainInsights: mainInsightsText || "Insights parsed with cleaning",
+          roast: cleanedParsed.Roast || "",
+        };
+      } catch (secondError) {
+        console.error("❌ Failed to parse even after cleaning:", secondError);
+        // Return raw content if parsing fails completely
+        return {
+          mainInsights: `Parsing failed. Raw content:\n${insightsString}`,
+          roast: "",
+        };
+      }
+    }
+  };
+
+  const { mainInsights, roast } = parseInsights(insights);
 
   const fetchRoast = async () => {
     if (!walletAddress) {
-      console.error("No wallet address provided for roast");
+      console.error("❌ No wallet address provided for roast");
       return;
     }
 
+    console.log("🔥 Fetching roast for wallet:", walletAddress);
     setIsLoadingRoast(true);
     try {
       const response = await fetch("/api/wallet/analyze", {
@@ -35,16 +112,21 @@ export default function AIInsights({
         }),
       });
 
+      console.log("🌐 Roast API response status:", response.status);
+
       if (!response.ok) {
         throw new Error(`Failed to fetch roast: ${response.statusText}`);
       }
 
       const data = await response.json();
+      console.log("📦 Roast API response data:", data);
 
-      // Extract roast content from insights
-      const { roast } = parseInsights(data.insights || "");
-      if (roast) {
-        setRoastContent(roast);
+      // Parse the roast data
+      const { roast: fetchedRoast } = parseInsights(data.insights);
+      console.log("🎭 Extracted roast content:", fetchedRoast);
+
+      if (fetchedRoast) {
+        setRoastContent(fetchedRoast);
         setShowRoast(true);
       } else {
         setRoastContent(
@@ -53,7 +135,7 @@ export default function AIInsights({
         setShowRoast(true);
       }
     } catch (error) {
-      console.error("Failed to fetch roast:", error);
+      console.error("❌ Failed to fetch roast:", error);
       setRoastContent(
         "🔥 Error loading roast, but your trading decisions are probably roast-worthy anyway! 😅"
       );
@@ -62,22 +144,6 @@ export default function AIInsights({
       setIsLoadingRoast(false);
     }
   };
-
-  // Parse insights to separate main content from roast if present
-  const parseInsights = (text: string) => {
-    const sections = text.split(/(?=🔥|ROAST:|Hot Take:)/i);
-    const mainInsights = sections[0];
-    const roastSection = sections.find(
-      (section) =>
-        section.toLowerCase().includes("🔥") ||
-        section.toLowerCase().includes("roast") ||
-        section.toLowerCase().includes("hot take")
-    );
-
-    return { mainInsights: mainInsights.trim(), roast: roastSection?.trim() };
-  };
-
-  const { mainInsights, roast } = parseInsights(insights || "");
 
   return (
     <div className="space-y-6">
@@ -110,7 +176,7 @@ export default function AIInsights({
         </div>
 
         <div className="prose prose-gray max-w-none">
-          {mainInsights ? (
+          {mainInsights && mainInsights !== "No insights available" ? (
             <div className="text-gray-300 leading-relaxed whitespace-pre-line">
               {mainInsights}
             </div>

@@ -6,9 +6,8 @@ import { useAccount } from "wagmi";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import PortfolioOverview from "@/components/dashboard/PortfolioOverview";
-import TransactionHistory from "@/components/dashboard/TransactionHistory";
-import AIInsights from "@/components/dashboard/AIInsights";
 import PerformanceChart from "@/components/dashboard/PerformanceChart";
+import InsightsCards from "@/components/dashboard/InsightsCards";
 import { motion } from "framer-motion";
 
 interface WalletData {
@@ -33,6 +32,7 @@ interface WalletData {
 export default function Dashboard() {
   const [walletData, setWalletData] = useState<WalletData | null>(null);
   const [insights, setInsights] = useState<string>("");
+  const [hotRoast, setHotRoast] = useState<string>("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string>("");
 
@@ -59,7 +59,7 @@ export default function Dashboard() {
         },
         body: JSON.stringify({
           address,
-          includeRoast: false,
+          includeRoast: true,
         }),
       });
 
@@ -69,7 +69,22 @@ export default function Dashboard() {
 
       const data = await response.json();
       setWalletData(data.wallet);
-      setInsights(data.insights || "");
+
+      // Parse insights to extract roast if present
+      try {
+        console.log("Raw insights data:", data.insights);
+        const parsedInsights = JSON.parse(data.insights || "{}");
+        console.log("Parsed insights:", parsedInsights);
+        const { Roast, ...mainInsights } = parsedInsights;
+        console.log("Extracted roast:", Roast);
+        console.log("Main insights:", mainInsights);
+
+        setInsights(JSON.stringify(mainInsights));
+        setHotRoast(Roast || "");
+      } catch {
+        setInsights(data.insights || "");
+        setHotRoast("");
+      }
     } catch (err) {
       console.error("Error analyzing wallet:", err);
       setError(err instanceof Error ? err.message : "Failed to analyze wallet");
@@ -169,11 +184,8 @@ export default function Dashboard() {
             {/* Performance Chart */}
             <PerformanceChart performance={walletData.performance} />
 
-            {/* Transaction History and AI Insights */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              <TransactionHistory transactions={walletData.transactions} />
-              <AIInsights insights={insights} walletAddress={walletAddress} />
-            </div>
+            {/* Insights Cards */}
+            <InsightsCards insights={insights} hotRoast={hotRoast} isLoading={loading} />
 
             {/* Last Updated */}
             <motion.div
