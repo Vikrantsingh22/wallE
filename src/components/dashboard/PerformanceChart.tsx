@@ -27,7 +27,7 @@ export default function PerformanceChart({
 }: PerformanceChartProps) {
   // Generate sample data for the chart (in a real app, this would come from API)
   const generateChartData = () => {
-    const data = [];
+    const data: { date: string; pnl: number; timestamp: number }[] = [];
     const now = new Date();
 
     for (let i = 29; i >= 0; i--) {
