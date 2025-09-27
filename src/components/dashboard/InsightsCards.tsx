@@ -151,6 +151,15 @@ const InsightsCards: React.FC<InsightsCardsProps> = ({
             Portfolio Insights
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Hot Roast Card - using dedicated component */}
+            {effectiveRoast && (
+              <div className="md:col-span-2">
+                <RoastCard
+                  roast={effectiveRoast}
+                  delay={Object.keys(parsedInsights).length * 0.1}
+                />
+              </div>
+            )}
             {/* Main Insights */}
             {Object.entries(parsedInsights).map(([key, value], index) => {
               const config = getInsightConfig(key);
@@ -182,16 +191,6 @@ const InsightsCards: React.FC<InsightsCardsProps> = ({
                 </motion.div>
               );
             })}
-
-            {/* Hot Roast Card - using dedicated component */}
-            {effectiveRoast && (
-              <div className="md:col-span-2">
-                <RoastCard
-                  roast={effectiveRoast}
-                  delay={Object.keys(parsedInsights).length * 0.1}
-                />
-              </div>
-            )}
           </div>
 
           {/* Parsing Errors (if any) - only show in development */}
