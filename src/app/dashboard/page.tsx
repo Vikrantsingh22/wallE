@@ -101,7 +101,7 @@ export default function Dashboard() {
     return (
       <div className="min-h-screen bg-gray-900">
         <Navbar />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 pt-20">
           <div className="text-center">
             <h1 className="text-3xl font-bold text-white mb-4">
               No Wallet Address
@@ -126,7 +126,7 @@ export default function Dashboard() {
     <div className="min-h-screen bg-gray-900">
       <Navbar />
 
-      <main className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-4 md:py-8">
+      <main className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-4 md:py-8 pt-20">
         {/* Header */}
         <motion.div
           className="mb-6 md:mb-8"

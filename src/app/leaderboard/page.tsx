@@ -8,10 +8,16 @@ interface LeaderboardEntry {
   rank: number;
   address: string;
   totalValue: number;
-  totalPnL: number;
-  riskScore: number;
-  transactions: number;
-  lastActive: string;
+  performance: {
+    totalPnL: number;
+    dailyPnL: number;
+    weeklyPnL: number;
+    monthlyPnL: number;
+    bestPerformer: string;
+    worstPerformer: string;
+  };
+  riskLevel: string;
+  lastUpdated: string;
 }
 
 export default function Leaderboard() {
@@ -19,65 +25,41 @@ export default function Leaderboard() {
     []
   );
   const [loading, setLoading] = useState(true);
-  const [sortBy, setSortBy] = useState<"totalValue" | "totalPnL" | "riskScore">(
-    "totalValue"
-  );
+  const [error, setError] = useState<string | null>(null);
+  const [sortBy, setSortBy] = useState<
+    "totalValue" | "totalPnL" | "dailyPnL" | "weeklyPnL" | "monthlyPnL"
+  >("totalPnL");
+
+  const fetchLeaderboardData = async (sortBy: string) => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const response = await fetch(
+        `/api/leaderboard?sortBy=${sortBy}&limit=50`
+      );
+      const result = await response.json();
+
+      if (!response.ok || !result.success) {
+        throw new Error(result.message || "Failed to fetch leaderboard data");
+      }
+
+      setLeaderboardData(result.data);
+    } catch (err) {
+      console.error("Error fetching leaderboard:", err);
+      setError(
+        err instanceof Error ? err.message : "Failed to load leaderboard"
+      );
+      // Fallback to empty array on error
+      setLeaderboardData([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    // Simulate loading leaderboard data
-    // In a real app, this would fetch from an API
-    setTimeout(() => {
-      const mockData: LeaderboardEntry[] = [
-        {
-          rank: 1,
-          address: "0x742d35Cc69Ff726b71dA1E9C93fb6DC0Bb7b7E4F",
-          totalValue: 125000,
-          totalPnL: 15000,
-          riskScore: 25,
-          transactions: 847,
-          lastActive: "2024-01-15",
-        },
-        {
-          rank: 2,
-          address: "0x8ba1f109551bD432803012645Hac136c7b7E8f1a",
-          totalValue: 89000,
-          totalPnL: 12500,
-          riskScore: 35,
-          transactions: 623,
-          lastActive: "2024-01-14",
-        },
-        {
-          rank: 3,
-          address: "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
-          totalValue: 67000,
-          totalPnL: 8900,
-          riskScore: 45,
-          transactions: 445,
-          lastActive: "2024-01-13",
-        },
-        {
-          rank: 4,
-          address: "0xA0b86a33E6441A8C143d3f57A6d4F8EB7b2C8e4A",
-          totalValue: 45000,
-          totalPnL: 5600,
-          riskScore: 55,
-          transactions: 234,
-          lastActive: "2024-01-12",
-        },
-        {
-          rank: 5,
-          address: "0x6B175474E89094C44Da98b954EedeAC495271d0F",
-          totalValue: 34000,
-          totalPnL: 3400,
-          riskScore: 65,
-          transactions: 189,
-          lastActive: "2024-01-11",
-        },
-      ];
-      setLeaderboardData(mockData);
-      setLoading(false);
-    }, 1500);
-  }, []);
+    fetchLeaderboardData(sortBy);
+  }, [sortBy]);
 
   const formatAddress = (address: string) => {
     return `${address.slice(0, 6)}...${address.slice(-4)}`;
@@ -106,28 +88,20 @@ export default function Leaderboard() {
     }
   };
 
-  const getRiskColor = (score: number) => {
-    if (score <= 30) return "text-green-400";
-    if (score <= 60) return "text-yellow-400";
+  const getRiskColor = (score: string) => {
+    if (score == "LOW") return "text-green-400";
+    if (score == "MEDIUM") return "text-yellow-400";
     return "text-red-400";
   };
 
-  const sortedData = [...leaderboardData].sort((a, b) => {
-    switch (sortBy) {
-      case "totalPnL":
-        return b.totalPnL - a.totalPnL;
-      case "riskScore":
-        return a.riskScore - b.riskScore;
-      default:
-        return b.totalValue - a.totalValue;
-    }
-  });
+  // Data is already sorted by the API, no need to sort again
+  const sortedData = leaderboardData;
 
   return (
     <div className="min-h-screen bg-gray-900">
       <Navbar />
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pt-20">
         {/* Header */}
         <motion.div
           className="text-center mb-12"
@@ -150,9 +124,20 @@ export default function Leaderboard() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
         >
+          <div className="flex gap-2">
+            <button
+              onClick={() => fetchLeaderboardData(sortBy)}
+              disabled={loading}
+              className="px-3 py-2 bg-gray-800 text-gray-300 hover:bg-gray-700 rounded-lg font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+            >
+              <span className={loading ? "animate-spin" : ""}>🔄</span>
+              Refresh
+            </button>
+          </div>
           <button
             onClick={() => setSortBy("totalValue")}
-            className={`px-4 py-2 rounded-lg font-medium transition-all ${
+            disabled={loading}
+            className={`px-4 py-2 rounded-lg font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed ${
               sortBy === "totalValue"
                 ? "bg-purple-600 text-white"
                 : "bg-gray-800 text-gray-300 hover:bg-gray-700"
@@ -162,23 +147,14 @@ export default function Leaderboard() {
           </button>
           <button
             onClick={() => setSortBy("totalPnL")}
-            className={`px-4 py-2 rounded-lg font-medium transition-all ${
+            disabled={loading}
+            className={`px-4 py-2 rounded-lg font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed ${
               sortBy === "totalPnL"
                 ? "bg-purple-600 text-white"
                 : "bg-gray-800 text-gray-300 hover:bg-gray-700"
             }`}
           >
             Total P&L
-          </button>
-          <button
-            onClick={() => setSortBy("riskScore")}
-            className={`px-4 py-2 rounded-lg font-medium transition-all ${
-              sortBy === "riskScore"
-                ? "bg-purple-600 text-white"
-                : "bg-gray-800 text-gray-300 hover:bg-gray-700"
-            }`}
-          >
-            Risk Score
           </button>
         </motion.div>
 
@@ -187,6 +163,30 @@ export default function Leaderboard() {
             <div className="text-center">
               <div className="w-8 h-8 border-4 border-purple-500/30 border-t-purple-500 rounded-full animate-spin mx-auto mb-4"></div>
               <p className="text-gray-400">Loading leaderboard...</p>
+            </div>
+          </div>
+        ) : error ? (
+          <div className="flex items-center justify-center py-12">
+            <div className="text-center">
+              <div className="text-red-400 text-2xl mb-4">⚠️</div>
+              <p className="text-red-400 mb-2">Failed to load leaderboard</p>
+              <p className="text-gray-500 text-sm mb-4">{error}</p>
+              <button
+                onClick={() => fetchLeaderboardData(sortBy)}
+                className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors"
+              >
+                Retry
+              </button>
+            </div>
+          </div>
+        ) : leaderboardData.length === 0 ? (
+          <div className="flex items-center justify-center py-12">
+            <div className="text-center">
+              <div className="text-gray-400 text-2xl mb-4">📊</div>
+              <p className="text-gray-400">No wallet data available</p>
+              <p className="text-gray-500 text-sm">
+                Check back later for leaderboard updates
+              </p>
             </div>
           </div>
         ) : (
@@ -201,9 +201,8 @@ export default function Leaderboard() {
               <div>Rank</div>
               <div className="col-span-2">Wallet</div>
               <div>Portfolio</div>
-              <div>P&L</div>
+              <div>Total P&L</div>
               <div>Risk</div>
-              <div>Transactions</div>
             </div>
 
             {/* Leaderboard Entries */}
@@ -225,7 +224,7 @@ export default function Leaderboard() {
                       {formatAddress(entry.address)}
                     </div>
                     <div className="text-gray-500 text-sm">
-                      Active {entry.lastActive}
+                      Updated {new Date(entry.lastUpdated).toLocaleDateString()}
                     </div>
                   </div>
 
@@ -235,21 +234,19 @@ export default function Leaderboard() {
 
                   <div
                     className={`font-semibold ${
-                      entry.totalPnL >= 0 ? "text-green-400" : "text-red-400"
+                      entry.performance.totalPnL >= 0
+                        ? "text-green-400"
+                        : "text-red-400"
                     }`}
                   >
-                    {entry.totalPnL >= 0 ? "+" : ""}
-                    {formatCurrency(entry.totalPnL)}
+                    {entry.performance.totalPnL >= 0 ? "+" : ""}
+                    {formatCurrency(entry.performance.totalPnL)}
                   </div>
 
                   <div
-                    className={`font-semibold ${getRiskColor(entry.riskScore)}`}
+                    className={`font-semibold ${getRiskColor(entry.riskLevel)}`}
                   >
-                    {entry.riskScore}%
-                  </div>
-
-                  <div className="text-gray-300">
-                    {entry.transactions.toLocaleString()}
+                    {entry.riskLevel}
                   </div>
                 </motion.div>
               ))}

@@ -24,3 +24,90 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* RainbowKit Connect Button Customization */
+[data-rk] button {
+  border-radius: 12px !important;
+  font-weight: 500 !important;
+}
+
+/* RainbowKit Modal and Popup Customization */
+[data-rk] [role="dialog"] {
+  border-radius: 16px !important;
+}
+
+/* Fix text visibility in RainbowKit popups */
+[data-rk] [data-testid="rk-account-button"] {
+  border-radius: 12px !important;
+}
+
+/* Main account modal background and text fixes */
+[data-rk] [role="dialog"] {
+  background: rgba(17, 24, 39, 0.95) !important;
+  backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(75, 85, 99, 0.3) !important;
+  color: #ffffff !important;
+}
+
+/* Account modal header text */
+[data-rk] [role="dialog"] h1,
+[data-rk] [role="dialog"] h2,
+[data-rk] [role="dialog"] h3,
+[data-rk] [role="dialog"] p,
+[data-rk] [role="dialog"] span,
+[data-rk] [role="dialog"] div {
+  color: #ffffff !important;
+}
+
+/* Account modal buttons - Copy Address and Disconnect */
+[data-rk] [role="dialog"] button {
+  color: #ffffff !important;
+  background: rgba(55, 65, 81, 0.8) !important;
+  border: 1px solid rgba(75, 85, 99, 0.4) !important;
+  border-radius: 8px !important;
+  backdrop-filter: blur(10px) !important;
+  transition: all 0.2s ease !important;
+}
+
+[data-rk] [role="dialog"] button:hover {
+  background: rgba(75, 85, 99, 0.9) !important;
+  border-color: rgba(124, 58, 237, 0.5) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Account dropdown/popup when clicking on address */
+[data-rk] div[style*="position: absolute"] {
+  background: rgba(17, 24, 39, 0.95) !important;
+  backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(75, 85, 99, 0.3) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2),
+    0 10px 10px -5px rgba(0, 0, 0, 0.1) !important;
+}
+
+[data-rk] div[style*="position: absolute"] button {
+  color: #ffffff !important;
+  background-color: transparent !important;
+  transition: all 0.2s ease !important;
+}
+
+[data-rk] div[style*="position: absolute"] button:hover {
+  background: rgba(55, 65, 81, 0.6) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Ensure all text in popups is white */
+[data-rk] div[style*="position: absolute"] * {
+  color: #ffffff !important;
+}
+
+/* Additional styling for better visual hierarchy */
+[data-rk] [role="dialog"] button svg,
+[data-rk] div[style*="position: absolute"] button svg {
+  opacity: 0.8 !important;
+}
+
+[data-rk] [role="dialog"] button:hover svg,
+[data-rk] div[style*="position: absolute"] button:hover svg {
+  opacity: 1 !important;
+}

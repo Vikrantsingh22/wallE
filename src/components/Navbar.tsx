@@ -19,100 +19,102 @@ function classNames(...classes: string[]) {
 
 export default function Navbar() {
   return (
-    <Disclosure
-      as="nav"
-      className="sticky top-0 z-50 bg-gray-900/80 backdrop-blur-lg border-b border-gray-800"
-    >
-      {({ open }) => (
-        <>
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="flex h-16 items-center justify-between">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <Link href="/" className="flex items-center space-x-2">
-                    <motion.div
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="bg-gradient-to-r from-purple-600 to-cyan-500 text-white font-bold text-xl px-3 py-1 rounded-lg"
-                    >
-                      WallE
-                    </motion.div>
-                  </Link>
-                </div>
-                <div className="hidden md:block">
-                  <div className="ml-10 flex items-baseline space-x-4">
-                    {navigation.map((item) => (
-                      <Link
-                        key={item.name}
-                        href={item.href}
-                        className={classNames(
-                          item.current
-                            ? "text-white bg-gray-800"
-                            : "text-gray-300 hover:text-white hover:bg-gray-700",
-                          "rounded-md px-3 py-2 text-sm font-medium transition-colors duration-200"
-                        )}
-                        aria-current={item.current ? "page" : undefined}
+    <div className="fixed top-4 left-0 right-0 z-50 px-4 sm:px-6 lg:px-8">
+      <Disclosure
+        as="nav"
+        className="mx-auto max-w-6xl bg-gray-900/95 backdrop-blur-xl border border-gray-800 rounded-2xl shadow-xl shadow-black/20"
+      >
+        {({ open }) => (
+          <>
+            <div className="px-6 sm:px-8 lg:px-10">
+              <div className="flex h-16 items-center justify-between">
+                <div className="flex items-center">
+                  <div className="flex-shrink-0">
+                    <Link href="/" className="flex items-center space-x-2">
+                      <motion.div
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="bg-gradient-to-r from-purple-600 to-cyan-500 text-white font-bold text-xl px-3 py-1 rounded-lg"
                       >
-                        {item.name}
-                      </Link>
-                    ))}
+                        WallE
+                      </motion.div>
+                    </Link>
+                  </div>
+                  <div className="hidden md:block">
+                    <div className="ml-10 flex items-baseline space-x-4">
+                      {navigation.map((item) => (
+                        <Link
+                          key={item.name}
+                          href={item.href}
+                          className={classNames(
+                            item.current
+                              ? "text-white bg-gray-800"
+                              : "text-gray-300 hover:text-white hover:bg-gray-700",
+                            "rounded-md px-4 py-2.5 text-base font-medium transition-colors duration-200"
+                          )}
+                          aria-current={item.current ? "page" : undefined}
+                        >
+                          {item.name}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="hidden md:block">
+                  <div className="ml-4 flex items-center md:ml-6">
+                    <ConnectButton
+                      chainStatus="icon"
+                      accountStatus="address"
+                      showBalance={false}
+                    />
+                  </div>
+                </div>
+
+                <div className="-mr-2 flex md:hidden">
+                  <Disclosure.Button className="inline-flex items-center justify-center rounded-md bg-gray-800 p-2.5 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                    <span className="sr-only">Open main menu</span>
+                    {open ? (
+                      <XMarkIcon className="block h-7 w-7" aria-hidden="true" />
+                    ) : (
+                      <Bars3Icon className="block h-7 w-7" aria-hidden="true" />
+                    )}
+                  </Disclosure.Button>
+                </div>
+              </div>
+            </div>
+
+            <Disclosure.Panel className="md:hidden">
+              <div className="space-y-1 px-6 pb-4 pt-2 sm:px-8 bg-gray-900/95 backdrop-blur-xl rounded-b-2xl border-t border-gray-800">
+                {navigation.map((item) => (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    className={classNames(
+                      item.current
+                        ? "text-white bg-gray-800"
+                        : "text-gray-300 hover:text-white hover:bg-gray-700",
+                      "block rounded-md px-4 py-2.5 text-lg font-medium transition-colors duration-200"
+                    )}
+                    aria-current={item.current ? "page" : undefined}
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+                <div className="border-t border-gray-700 pt-4 pb-3">
+                  <div className="px-3">
+                    <ConnectButton
+                      chainStatus="icon"
+                      accountStatus="address"
+                      showBalance={false}
+                    />
                   </div>
                 </div>
               </div>
-
-              <div className="hidden md:block">
-                <div className="ml-4 flex items-center md:ml-6">
-                  <ConnectButton
-                    chainStatus="icon"
-                    accountStatus="address"
-                    showBalance={false}
-                  />
-                </div>
-              </div>
-
-              <div className="-mr-2 flex md:hidden">
-                <Disclosure.Button className="inline-flex items-center justify-center rounded-md bg-gray-800 p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                  <span className="sr-only">Open main menu</span>
-                  {open ? (
-                    <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
-                  ) : (
-                    <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
-                  )}
-                </Disclosure.Button>
-              </div>
-            </div>
-          </div>
-
-          <Disclosure.Panel className="md:hidden">
-            <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3 bg-gray-900/95 backdrop-blur-lg">
-              {navigation.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className={classNames(
-                    item.current
-                      ? "text-white bg-gray-800"
-                      : "text-gray-300 hover:text-white hover:bg-gray-700",
-                    "block rounded-md px-3 py-2 text-base font-medium transition-colors duration-200"
-                  )}
-                  aria-current={item.current ? "page" : undefined}
-                >
-                  {item.name}
-                </Link>
-              ))}
-              <div className="border-t border-gray-700 pt-4 pb-3">
-                <div className="px-3">
-                  <ConnectButton
-                    chainStatus="icon"
-                    accountStatus="address"
-                    showBalance={false}
-                  />
-                </div>
-              </div>
-            </div>
-          </Disclosure.Panel>
-        </>
-      )}
-    </Disclosure>
+            </Disclosure.Panel>
+          </>
+        )}
+      </Disclosure>
+    </div>
   );
 }

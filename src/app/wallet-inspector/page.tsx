@@ -45,7 +45,7 @@ const WalletInspector = () => {
     }).format(val);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-blue-50 p-4">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-blue-50 p-4 pt-20">
       <div className="max-w-6xl mx-auto space-y-6">
         <h1 className="text-3xl font-bold flex items-center gap-2">
           <Wallet className="w-8 h-8 text-indigo-600" /> Wallet Inspector
