@@ -17,18 +17,18 @@ export default function AIInsights({
   const [isLoadingRoast, setIsLoadingRoast] = useState(false);
   // Parse insights safely with detailed logging
   const parseInsights = (insightsString: string) => {
-    console.log("🔍 Raw insights received:", insightsString);
-    console.log("🔍 Insights type:", typeof insightsString);
+    //console.log("🔍 Raw insights received:", insightsString);
+    //console.log("🔍 Insights type:", typeof insightsString);
 
     if (!insightsString) {
-      console.log("❌ No insights provided");
+      //console.log("❌ No insights provided");
       return { mainInsights: "No insights available", roast: "" };
     }
 
     try {
       // If insights is already an object, return it
       if (typeof insightsString === "object") {
-        console.log("✅ Insights already parsed:", insightsString);
+        //console.log("✅ Insights already parsed:", insightsString);
         const insightsObj = insightsString as any;
         return {
           mainInsights: JSON.stringify(insightsString, null, 2),
@@ -38,7 +38,7 @@ export default function AIInsights({
 
       // Try to parse as JSON
       const parsed = JSON.parse(insightsString);
-      console.log("✅ Successfully parsed insights:", parsed);
+      //console.log("✅ Successfully parsed insights:", parsed);
 
       // Format the insights for display
       const mainInsightsText = Object.entries(parsed)
@@ -52,7 +52,7 @@ export default function AIInsights({
       };
     } catch (error) {
       console.error("❌ Failed to parse insights JSON:", error);
-      console.log("🔍 Problematic insights string:", insightsString);
+      //console.log("🔍 Problematic insights string:", insightsString);
 
       // Try to clean up common JSON issues and parse again
       try {
@@ -66,9 +66,9 @@ export default function AIInsights({
           .replace(/P&L\.to start/g, "P&L. To start") // Fix concatenated text
           .trim();
 
-        console.log("🔧 Attempting to parse cleaned JSON:", cleaned);
+        //console.log("🔧 Attempting to parse cleaned JSON:", cleaned);
         const cleanedParsed = JSON.parse(cleaned);
-        console.log("✅ Successfully parsed cleaned insights:", cleanedParsed);
+        //console.log("✅ Successfully parsed cleaned insights:", cleanedParsed);
 
         const mainInsightsText = Object.entries(cleanedParsed)
           .filter(([key]) => key !== "Roast")
@@ -98,7 +98,7 @@ export default function AIInsights({
       return;
     }
 
-    console.log("🔥 Fetching roast for wallet:", walletAddress);
+    //console.log("🔥 Fetching roast for wallet:", walletAddress);
     setIsLoadingRoast(true);
     try {
       const response = await fetch("/api/wallet/analyze", {
@@ -112,18 +112,18 @@ export default function AIInsights({
         }),
       });
 
-      console.log("🌐 Roast API response status:", response.status);
+      //console.log("🌐 Roast API response status:", response.status);
 
       if (!response.ok) {
         throw new Error(`Failed to fetch roast: ${response.statusText}`);
       }
 
       const data = await response.json();
-      console.log("📦 Roast API response data:", data);
+      //console.log("📦 Roast API response data:", data);
 
       // Parse the roast data
       const { roast: fetchedRoast } = parseInsights(data.insights);
-      console.log("🎭 Extracted roast content:", fetchedRoast);
+      //console.log("🎭 Extracted roast content:", fetchedRoast);
 
       if (fetchedRoast) {
         setRoastContent(fetchedRoast);

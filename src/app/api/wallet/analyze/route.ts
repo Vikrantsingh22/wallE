@@ -11,7 +11,7 @@ const llmService = new LLMService();
 
 function calculatePerformance(tokenPerformance: any[]) {
   if (!tokenPerformance?.length) {
-    console.log("No token performance data available.");
+    //console.log("No token performance data available.");
     return {
       totalPnL: 0,
       dailyPnL: 0,
@@ -34,11 +34,11 @@ function calculatePerformance(tokenPerformance: any[]) {
     } else {
       totalPos += token.abs_profit_fiat_period;
     }
-    console.log(
+    //console.log(
       `Token: ${token.contract_address}, PnL: ${token.abs_profit_fiat_period}`
     );
   }
-  console.log(
+  //console.log(
     `Total Positive PnL: ${totalPos}, Total Negative PnL: ${totalNeg}`
   );
   const bestToken = tokenPerformance.reduce((best, t) =>

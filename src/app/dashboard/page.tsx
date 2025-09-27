@@ -72,12 +72,12 @@ export default function Dashboard() {
 
       // Parse insights to extract roast if present
       try {
-        console.log("Raw insights data:", data.insights);
+        //console.log("Raw insights data:", data.insights);
         const parsedInsights = JSON.parse(data.insights || "{}");
-        console.log("Parsed insights:", parsedInsights);
+        //console.log("Parsed insights:", parsedInsights);
         const { Roast, ...mainInsights } = parsedInsights;
-        console.log("Extracted roast:", Roast);
-        console.log("Main insights:", mainInsights);
+        //console.log("Extracted roast:", Roast);
+        //console.log("Main insights:", mainInsights);
 
         setInsights(JSON.stringify(mainInsights));
         setHotRoast(Roast || "");

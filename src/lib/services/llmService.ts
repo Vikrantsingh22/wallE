@@ -35,7 +35,7 @@ export class LLMService {
   buildPrompt(walletData: any, includeRoast: boolean) {
     const { totalValue, performance, riskAssessment, transactions } =
       walletData;
-    console.log(JSON.stringify(walletData));
+    //console.log(JSON.stringify(walletData));
     let prompt = `Analyze this crypto wallet data and provide insights:
     
 Portfolio Value: $${totalValue}
