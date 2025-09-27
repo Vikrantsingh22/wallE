@@ -1,7 +1,15 @@
 export class LLMService {
   openaiKey = process.env.OPENAI_API_KEY!;
 
-  async generateInsights(walletData: any, includeRoast = false) {
+  async generateInsights(
+    walletData: {
+      totalValue: number;
+      performance: { totalPnL: number };
+      riskAssessment: { overallRisk: string };
+      transactions: any[];
+    },
+    includeRoast = false
+  ) {
     const prompt = this.buildPrompt(walletData, includeRoast);
 
     const res = await fetch("https://api.openai.com/v1/chat/completions", {
