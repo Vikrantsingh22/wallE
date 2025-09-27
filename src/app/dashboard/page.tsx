@@ -126,20 +126,20 @@ export default function Dashboard() {
     <div className="min-h-screen bg-gray-900">
       <Navbar />
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-4 md:py-8">
         {/* Header */}
         <motion.div
-          className="mb-8"
+          className="mb-6 md:mb-8"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <h1 className="text-3xl font-bold text-white mb-2">
+          <h1 className="text-2xl md:text-3xl font-bold text-white mb-2">
             Wallet Dashboard
           </h1>
-          <p className="text-gray-400">
+          <p className="text-gray-400 text-sm md:text-base">
             Analyzing:{" "}
-            <span className="text-purple-400 font-mono">
+            <span className="text-purple-400 font-mono break-all">
               {formatAddress(walletAddress)}
             </span>
           </p>
@@ -173,7 +173,7 @@ export default function Dashboard() {
         )}
 
         {walletData && (
-          <div className="space-y-8">
+          <div className="space-y-6 md:space-y-8">
             {/* Portfolio Overview */}
             <PortfolioOverview
               totalValue={walletData.totalValue}
@@ -185,7 +185,11 @@ export default function Dashboard() {
             <PerformanceChart performance={walletData.performance} />
 
             {/* Insights Cards */}
-            <InsightsCards insights={insights} hotRoast={hotRoast} isLoading={loading} />
+            <InsightsCards
+              insights={insights}
+              hotRoast={hotRoast}
+              isLoading={loading}
+            />
 
             {/* Last Updated */}
             <motion.div

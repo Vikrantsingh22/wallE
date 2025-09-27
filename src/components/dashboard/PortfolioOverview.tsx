@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { shortenAddress, getEtherscanUrl, isValidAddress } from "@/lib/utils/addressUtils";
 
 interface PortfolioOverviewProps {
   totalValue: number;
@@ -54,43 +55,43 @@ export default function PortfolioOverview({
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
       {/* Portfolio Value */}
       <motion.div
-        className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 border border-gray-700"
+        className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-4 md:p-6 border border-gray-700"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <h3 className="text-lg font-semibold text-gray-300 mb-4">
+        <h3 className="text-base md:text-lg font-semibold text-gray-300 mb-3 md:mb-4">
           Portfolio Value
         </h3>
-        <div className="text-3xl font-bold text-white mb-2">
+        <div className="text-2xl md:text-3xl font-bold text-white mb-2">
           {formatCurrency(totalValue)}
         </div>
         <div className="space-y-2">
           <div className="flex justify-between items-center">
-            <span className="text-gray-400">24h P&L</span>
+            <span className="text-gray-400 text-sm md:text-base">24h P&L</span>
             <span
-              className={`font-semibold ${getPnLColor(performance.dailyPnL)}`}
+              className={`font-semibold text-sm md:text-base ${getPnLColor(performance.dailyPnL)}`}
             >
               {performance.dailyPnL > 0 ? "+" : ""}
               {formatCurrency(performance.dailyPnL)}
             </span>
           </div>
           <div className="flex justify-between items-center">
-            <span className="text-gray-400">7d P&L</span>
+            <span className="text-gray-400 text-sm md:text-base">7d P&L</span>
             <span
-              className={`font-semibold ${getPnLColor(performance.weeklyPnL)}`}
+              className={`font-semibold text-sm md:text-base ${getPnLColor(performance.weeklyPnL)}`}
             >
               {performance.weeklyPnL > 0 ? "+" : ""}
               {formatCurrency(performance.weeklyPnL)}
             </span>
           </div>
           <div className="flex justify-between items-center">
-            <span className="text-gray-400">30d P&L</span>
+            <span className="text-gray-400 text-sm md:text-base">30d P&L</span>
             <span
-              className={`font-semibold ${getPnLColor(performance.monthlyPnL)}`}
+              className={`font-semibold text-sm md:text-base ${getPnLColor(performance.monthlyPnL)}`}
             >
               {performance.monthlyPnL > 0 ? "+" : ""}
               {formatCurrency(performance.monthlyPnL)}
@@ -101,37 +102,99 @@ export default function PortfolioOverview({
 
       {/* Performance Summary */}
       <motion.div
-        className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 border border-gray-700"
+        className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-4 md:p-6 border border-gray-700"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.1 }}
       >
-        <h3 className="text-lg font-semibold text-gray-300 mb-4">
+        <h3 className="text-base md:text-lg font-semibold text-gray-300 mb-3 md:mb-4">
           Performance
         </h3>
-        <div className="space-y-4">
+        <div className="space-y-3 md:space-y-4">
           <div>
-            <div className="text-2xl font-bold mb-1">
+            <div className="text-xl md:text-2xl font-bold mb-1">
               <span className={getPnLColor(performance.totalPnL)}>
                 {performance.totalPnL > 0 ? "+" : ""}
                 {formatCurrency(performance.totalPnL)}
               </span>
             </div>
-            <div className="text-gray-400 text-sm">Total P&L</div>
+            <div className="text-gray-400 text-xs md:text-sm">Total P&L</div>
           </div>
 
           <div className="space-y-2">
-            <div className="flex justify-between items-center">
-              <span className="text-gray-400">Best Performer</span>
-              <span className="text-green-400 font-medium text-sm">
-                {performance.bestPerformer || "N/A"}
-              </span>
+            <div className="flex justify-between items-center min-h-[2rem]">
+              <span className="text-gray-400 text-xs md:text-sm">Best Performer</span>
+              <div className="flex items-center space-x-1 md:space-x-2 flex-shrink-0">
+                {performance.bestPerformer && isValidAddress(performance.bestPerformer) ? (
+                  <>
+                    <span className="text-green-400 font-medium text-xs md:text-sm font-mono">
+                      {shortenAddress(performance.bestPerformer)}
+                    </span>
+                    <a
+                      href={getEtherscanUrl(performance.bestPerformer)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-400 hover:text-blue-300 transition-colors flex-shrink-0"
+                      title="View on Etherscan"
+                    >
+                      <svg
+                        className="w-3 h-3"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                        />
+                      </svg>
+                    </a>
+                  </>
+                ) : (
+                  <span className="text-green-400 font-medium text-xs md:text-sm">
+                    {performance.bestPerformer || "N/A"}
+                  </span>
+                )}
+              </div>
             </div>
-            <div className="flex justify-between items-center">
-              <span className="text-gray-400">Worst Performer</span>
-              <span className="text-red-400 font-medium text-sm">
-                {performance.worstPerformer || "N/A"}
-              </span>
+            <div className="flex justify-between items-center min-h-[2rem]">
+              <span className="text-gray-400 text-xs md:text-sm">Worst Performer</span>
+              <div className="flex items-center space-x-1 md:space-x-2 flex-shrink-0">
+                {performance.worstPerformer && isValidAddress(performance.worstPerformer) ? (
+                  <>
+                    <span className="text-red-400 font-medium text-xs md:text-sm font-mono">
+                      {shortenAddress(performance.worstPerformer)}
+                    </span>
+                    <a
+                      href={getEtherscanUrl(performance.worstPerformer)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-400 hover:text-blue-300 transition-colors flex-shrink-0"
+                      title="View on Etherscan"
+                    >
+                      <svg
+                        className="w-3 h-3"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                        />
+                      </svg>
+                    </a>
+                  </>
+                ) : (
+                  <span className="text-red-400 font-medium text-xs md:text-sm">
+                    {performance.worstPerformer || "N/A"}
+                  </span>
+                )}
+              </div>
             </div>
           </div>
         </div>
@@ -139,12 +202,12 @@ export default function PortfolioOverview({
 
       {/* Risk Assessment */}
       <motion.div
-        className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 border border-gray-700"
+        className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-4 md:p-6 border border-gray-700"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
       >
-        <h3 className="text-lg font-semibold text-gray-300 mb-4">
+        <h3 className="text-base md:text-lg font-semibold text-gray-300 mb-3 md:mb-4">
           Risk Assessment
         </h3>
         <div className="mb-4">

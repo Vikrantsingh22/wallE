@@ -78,30 +78,30 @@ export default function PerformanceChart({
 
   return (
     <motion.div
-      className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 border border-gray-700"
+      className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-4 md:p-6 border border-gray-700"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.3 }}
     >
-      <div className="flex items-center justify-between mb-6">
-        <h3 className="text-lg font-semibold text-white">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 md:mb-6 space-y-2 sm:space-y-0">
+        <h3 className="text-base md:text-lg font-semibold text-white">
           30-Day P&L Performance
         </h3>
         <div className="flex items-center space-x-4">
           <div className="text-right">
             <div
-              className={`text-2xl font-bold ${
+              className={`text-xl md:text-2xl font-bold ${
                 isPositive ? "text-green-400" : "text-red-400"
               }`}
             >
               {isPositive ? "+" : ""}${performance.totalPnL.toFixed(2)}
             </div>
-            <div className="text-gray-400 text-sm">Total P&L</div>
+            <div className="text-gray-400 text-xs md:text-sm">Total P&L</div>
           </div>
         </div>
       </div>
 
-      <div className="h-64 w-full">
+      <div className="h-48 md:h-64 w-full">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={chartData}>
             <defs>
@@ -150,39 +150,39 @@ export default function PerformanceChart({
       </div>
 
       {/* Performance indicators */}
-      <div className="grid grid-cols-3 gap-4 mt-6 pt-4 border-t border-gray-700">
+      <div className="grid grid-cols-3 gap-2 md:gap-4 mt-4 md:mt-6 pt-3 md:pt-4 border-t border-gray-700">
         <div className="text-center">
           <div
-            className={`text-lg font-bold ${
+            className={`text-sm md:text-lg font-bold ${
               performance.dailyPnL >= 0 ? "text-green-400" : "text-red-400"
             }`}
           >
             {performance.dailyPnL >= 0 ? "+" : ""}$
             {performance.dailyPnL.toFixed(2)}
           </div>
-          <div className="text-gray-400 text-sm">24h</div>
+          <div className="text-gray-400 text-xs md:text-sm">24h</div>
         </div>
         <div className="text-center">
           <div
-            className={`text-lg font-bold ${
+            className={`text-sm md:text-lg font-bold ${
               performance.weeklyPnL >= 0 ? "text-green-400" : "text-red-400"
             }`}
           >
             {performance.weeklyPnL >= 0 ? "+" : ""}$
             {performance.weeklyPnL.toFixed(2)}
           </div>
-          <div className="text-gray-400 text-sm">7d</div>
+          <div className="text-gray-400 text-xs md:text-sm">7d</div>
         </div>
         <div className="text-center">
           <div
-            className={`text-lg font-bold ${
+            className={`text-sm md:text-lg font-bold ${
               performance.monthlyPnL >= 0 ? "text-green-400" : "text-red-400"
             }`}
           >
             {performance.monthlyPnL >= 0 ? "+" : ""}$
             {performance.monthlyPnL.toFixed(2)}
           </div>
-          <div className="text-gray-400 text-sm">30d</div>
+          <div className="text-gray-400 text-xs md:text-sm">30d</div>
         </div>
       </div>
     </motion.div>
