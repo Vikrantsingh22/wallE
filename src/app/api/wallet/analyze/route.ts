@@ -11,6 +11,7 @@ const llmService = new LLMService();
 
 function calculatePerformance(tokenPerformance: any[]) {
   if (!tokenPerformance?.length) {
+    console.log("No token performance data available.");
     return {
       totalPnL: 0,
       dailyPnL: 0,
@@ -23,6 +24,22 @@ function calculatePerformance(tokenPerformance: any[]) {
   const totalPnL = tokenPerformance.reduce(
     (sum, token) => sum + (token.abs_profit_fiat_period || 0),
     0
+  );
+  let totalNeg = 0;
+  let totalPos = 0;
+
+  for (let token of tokenPerformance) {
+    if (token.abs_profit_fiat_period < 0) {
+      totalNeg += token.abs_profit_fiat_period;
+    } else {
+      totalPos += token.abs_profit_fiat_period;
+    }
+    console.log(
+      `Token: ${token.contract_address}, PnL: ${token.abs_profit_fiat_period}`
+    );
+  }
+  console.log(
+    `Total Positive PnL: ${totalPos}, Total Negative PnL: ${totalNeg}`
   );
   const bestToken = tokenPerformance.reduce((best, t) =>
     t.abs_profit_fiat_period > (best?.abs_profit_fiat_period || -Infinity)
@@ -70,7 +87,7 @@ export async function POST(req: Request) {
       // Safely extract data with fallbacks
       const transactions = txHistory?.items || [];
       const portfolioData = portfolioValue?.result || { total: 0 };
-      const tokenData = tokenPerformance?.result || [];
+      const tokenData = tokenPerformance || [];
 
       const analyzedTransactions = transactions.map((tx: any) => {
         const { riskScore, riskFlags } = riskAnalysis.analyzeTransaction(tx);

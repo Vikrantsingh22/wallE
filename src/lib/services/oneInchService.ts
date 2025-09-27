@@ -31,7 +31,7 @@ export class OneInchService {
       );
 
       const data = res.data;
-      console.log("Transaction History Data:", data);
+      console.log("Transaction History Data:", JSON.stringify(data));
       return data || { items: [] }; // Return empty items array if no data
     } catch (error) {
       console.error("getTransactionHistory error:", error);
@@ -47,7 +47,7 @@ export class OneInchService {
       );
 
       const data = res.data;
-      console.log("Portfolio Value Data:", data);
+      console.log("Portfolio Value Data:", JSON.stringify(data));
       return data || { result: { total: 0 } }; // Return fallback data
     } catch (error) {
       console.error("getPortfolioValue error:", error);
@@ -63,7 +63,7 @@ export class OneInchService {
       );
 
       const data = res.data;
-      console.log("Token Performance Data:", data);
+      console.log("Token Performance Data:", JSON.stringify(data));
       return data || { result: [] }; // Return fallback data
     } catch (error) {
       console.error("getTokenPerformance error:", error);

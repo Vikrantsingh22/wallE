@@ -9,13 +9,21 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@headlessui/react": "^2.2.9",
+    "@heroicons/react": "^2.2.0",
+    "@rainbow-me/rainbowkit": "^2.2.8",
+    "@tanstack/react-query": "^5.90.2",
     "axios": "^1.12.2",
+    "framer-motion": "^12.23.22",
     "groq-sdk": "^0.32.0",
     "lucide-react": "^0.544.0",
     "mongoose": "^8.18.2",
     "next": "15.5.4",
     "react": "19.1.0",
-    "react-dom": "19.1.0"
+    "react-dom": "19.1.0",
+    "recharts": "^3.2.1",
+    "viem": "^2.37.8",
+    "wagmi": "^2.17.5"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
