@@ -26,16 +26,16 @@ export default function HeroSection() {
 
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-      {/* Animated Gradient Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900">
+      {/* Financial Grade Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black">
         <motion.div
-          className="absolute inset-0 bg-gradient-to-r from-purple-600/20 via-pink-600/20 to-cyan-600/20"
+          className="absolute inset-0 bg-gradient-to-r from-green-500/10 via-emerald-500/10 to-green-600/10"
           animate={{
             background: [
-              "linear-gradient(45deg, rgba(124, 58, 237, 0.2), rgba(236, 72, 153, 0.2), rgba(6, 182, 212, 0.2))",
-              "linear-gradient(135deg, rgba(236, 72, 153, 0.2), rgba(6, 182, 212, 0.2), rgba(124, 58, 237, 0.2))",
-              "linear-gradient(225deg, rgba(6, 182, 212, 0.2), rgba(124, 58, 237, 0.2), rgba(236, 72, 153, 0.2))",
-              "linear-gradient(315deg, rgba(124, 58, 237, 0.2), rgba(236, 72, 153, 0.2), rgba(6, 182, 212, 0.2))",
+              "linear-gradient(45deg, rgba(34, 197, 94, 0.1), rgba(16, 185, 129, 0.1), rgba(22, 163, 74, 0.1))",
+              "linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(22, 163, 74, 0.1), rgba(34, 197, 94, 0.1))",
+              "linear-gradient(225deg, rgba(22, 163, 74, 0.1), rgba(34, 197, 94, 0.1), rgba(16, 185, 129, 0.1))",
+              "linear-gradient(315deg, rgba(34, 197, 94, 0.1), rgba(16, 185, 129, 0.1), rgba(22, 163, 74, 0.1))",
             ],
           }}
           transition={{
@@ -46,12 +46,12 @@ export default function HeroSection() {
         />
       </div>
 
-      {/* Floating particles */}
+      {/* Floating financial particles */}
       <div className="absolute inset-0">
-        {[...Array(20)].map((_, i) => (
+        {[...Array(15)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute w-2 h-2 bg-white/10 rounded-full"
+            className="absolute w-1 h-1 bg-green-500/20 rounded-full"
             initial={{
               x:
                 typeof window !== "undefined"
@@ -64,10 +64,10 @@ export default function HeroSection() {
             }}
             animate={{
               y: [null, -100, null],
-              opacity: [0, 1, 0],
+              opacity: [0, 0.6, 0],
             }}
             transition={{
-              duration: Math.random() * 3 + 2,
+              duration: Math.random() * 4 + 3,
               repeat: Infinity,
               delay: Math.random() * 2,
             }}
@@ -82,11 +82,11 @@ export default function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-white via-purple-200 to-cyan-200 bg-clip-text text-transparent mb-6">
-            Social DeFi
+          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-white via-gray-200 to-green-200 bg-clip-text text-transparent mb-6">
+            Smart Wallet
             <br />
-            <span className="bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">
-              Reimagined
+            <span className="bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">
+              Analytics
             </span>
           </h1>
 
@@ -96,9 +96,9 @@ export default function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            Analyze your wallet, discover insights, and compete with friends on
-            the ultimate DeFi social platform. Get AI-powered recommendations
-            and playful roasts.
+            Professional-grade portfolio analysis and performance tracking. Get
+            institutional-level insights, risk assessments, and compete with
+            peers in the most sophisticated DeFi analytics platform.
           </motion.p>
 
           <motion.div
@@ -112,12 +112,12 @@ export default function HeroSection() {
               {isConnected ? (
                 <motion.button
                   onClick={handleConnectedWallet}
-                  className="bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white font-semibold py-4 px-8 rounded-xl shadow-lg hover:shadow-purple-500/25 transition-all duration-300 text-lg"
+                  className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-semibold py-4 px-8 rounded-xl shadow-lg hover:shadow-green-500/25 transition-all duration-300 text-lg border border-green-500/20"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   aria-label="Analyze your connected wallet"
                 >
-                  Analyze Your Wallet
+                  Analyze Portfolio
                 </motion.button>
               ) : (
                 <div className="connect-button-wrapper">
@@ -125,12 +125,12 @@ export default function HeroSection() {
                     {({ openConnectModal }) => (
                       <motion.button
                         onClick={openConnectModal}
-                        className="bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white font-semibold py-4 px-8 rounded-xl shadow-lg hover:shadow-purple-500/25 transition-all duration-300 text-lg"
+                        className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-semibold py-4 px-8 rounded-xl shadow-lg hover:shadow-green-500/25 transition-all duration-300 text-lg border border-green-500/20"
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                         aria-label="Connect your wallet to get started"
                       >
-                        Connect Your Wallet
+                        Connect Wallet
                       </motion.button>
                     )}
                   </ConnectButton.Custom>
@@ -140,9 +140,9 @@ export default function HeroSection() {
 
             {/* OR Divider */}
             <div className="flex items-center space-x-4">
-              <div className="h-px bg-gradient-to-r from-transparent via-gray-400 to-transparent w-12"></div>
-              <span className="text-gray-400 font-medium">OR</span>
-              <div className="h-px bg-gradient-to-r from-transparent via-gray-400 to-transparent w-12"></div>
+              <div className="h-px bg-gradient-to-r from-transparent via-green-400/30 to-transparent w-12"></div>
+              <span className="text-green-400/70 font-medium">OR</span>
+              <div className="h-px bg-gradient-to-r from-transparent via-green-400/30 to-transparent w-12"></div>
             </div>
 
             {/* Enter Address Form */}
@@ -155,12 +155,12 @@ export default function HeroSection() {
                 placeholder="Enter wallet address (0x...)"
                 value={walletAddress}
                 onChange={(e) => setWalletAddress(e.target.value)}
-                className="bg-gray-800/50 border border-gray-700 rounded-xl px-6 py-4 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent backdrop-blur-sm w-full sm:w-80"
+                className="bg-black/70 border border-gray-700 rounded-xl px-6 py-4 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 backdrop-blur-sm w-full sm:w-80 transition-all duration-300"
                 aria-label="Enter Ethereum wallet address"
               />
               <motion.button
                 type="submit"
-                className="bg-gradient-to-r from-cyan-500 to-cyan-600 hover:from-cyan-600 hover:to-cyan-700 text-white font-semibold py-4 px-8 rounded-xl shadow-lg hover:shadow-cyan-500/25 transition-all duration-300 text-lg whitespace-nowrap"
+                className="bg-black/80 border border-green-500/30 hover:border-green-500 hover:bg-green-600/10 text-white font-semibold py-4 px-8 rounded-xl shadow-lg hover:shadow-green-500/25 transition-all duration-300 text-lg whitespace-nowrap"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 aria-label="Analyze the entered wallet address"
@@ -178,7 +178,7 @@ export default function HeroSection() {
             transition={{ duration: 0.8, delay: 0.6 }}
           >
             <div className="text-center">
-              <div className="bg-gradient-to-r from-purple-500 to-purple-600 w-12 h-12 rounded-lg mx-auto mb-4 flex items-center justify-center">
+              <div className="bg-gradient-to-r from-green-500 to-green-600 w-12 h-12 rounded-lg mx-auto mb-4 flex items-center justify-center border border-green-400/20">
                 <svg
                   className="w-6 h-6 text-white"
                   fill="none"
@@ -194,15 +194,15 @@ export default function HeroSection() {
                 </svg>
               </div>
               <h3 className="text-lg font-semibold text-white mb-2">
-                Deep Analytics
+                Portfolio Analytics
               </h3>
               <p className="text-gray-400">
-                Comprehensive P&L tracking and performance insights
+                Professional P&L tracking and risk assessment
               </p>
             </div>
 
             <div className="text-center">
-              <div className="bg-gradient-to-r from-cyan-500 to-cyan-600 w-12 h-12 rounded-lg mx-auto mb-4 flex items-center justify-center">
+              <div className="bg-gradient-to-r from-emerald-500 to-emerald-600 w-12 h-12 rounded-lg mx-auto mb-4 flex items-center justify-center border border-emerald-400/20">
                 <svg
                   className="w-6 h-6 text-white"
                   fill="none"
@@ -218,15 +218,15 @@ export default function HeroSection() {
                 </svg>
               </div>
               <h3 className="text-lg font-semibold text-white mb-2">
-                AI Insights
+                AI-Powered Insights
               </h3>
               <p className="text-gray-400">
-                Smart recommendations and playful roasts
+                Institutional-grade analysis and recommendations
               </p>
             </div>
 
             <div className="text-center">
-              <div className="bg-gradient-to-r from-pink-500 to-pink-600 w-12 h-12 rounded-lg mx-auto mb-4 flex items-center justify-center">
+              <div className="bg-gradient-to-r from-green-600 to-green-700 w-12 h-12 rounded-lg mx-auto mb-4 flex items-center justify-center border border-green-500/20">
                 <svg
                   className="w-6 h-6 text-white"
                   fill="none"
@@ -242,10 +242,10 @@ export default function HeroSection() {
                 </svg>
               </div>
               <h3 className="text-lg font-semibold text-white mb-2">
-                Social Features
+                Performance Rankings
               </h3>
               <p className="text-gray-400">
-                Compete on leaderboards with friends
+                Benchmark against top DeFi traders
               </p>
             </div>
           </motion.div>

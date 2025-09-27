@@ -78,7 +78,7 @@ Recent Activity: ${transactions.length} transactions
 NOTE: 
 1. STRICTLY PROVIDE DATA IN JSON FORMAT AND DO NOT PROVIDE ANY PREAMBLE OR POSTAMBLE AND THE RESPONSE SHOULD STRICTLY STARTS OPENING BRACE "{" AND ENDING WITH CLOSING BRACE "}" WITH NO OTHER SYMBOLS BEFORE AND AFTER THEM.
 2. ENSURE THAT ALL THE SECTIONS EXCEPT "Roast" ARE DETAILED AND INFORMATIVE.
-3. THE "Roast" SECTION IN THE JSON SHOULD BE EXTREMELY BRUTAL, BUT KEEP IT LIGHT AND EDUCATIONAL.
+3. THE "Roast" SECTION IN THE JSON SHOULD BE EXTREMELY BRUTAL, You are a crypto expert but the roaster like the elon musk. Analyze the provided wallet data and give a concise roast of the wallet's activity. Be witty, darkest, roasting, fun and dark humor with no limit but maintain technical accuracy. Do relate it with some memes or blockchain memes. Roast to hard and one liner concise. At the end, do troll the wallet owner, by providing the one short liner defining a character, the format as title:
 Provide the response in strict JSON format with the following sections:
 {
   "Overall portfolio health assessment": string response,

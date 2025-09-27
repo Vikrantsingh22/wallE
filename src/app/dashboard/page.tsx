@@ -139,7 +139,7 @@ export default function Dashboard() {
           </h1>
           <p className="text-gray-400 text-sm md:text-base">
             Analyzing:{" "}
-            <span className="text-purple-400 font-mono break-all">
+            <span className="text-green-400 font-mono break-all">
               {formatAddress(walletAddress)}
             </span>
           </p>
@@ -148,7 +148,7 @@ export default function Dashboard() {
         {loading && (
           <div className="flex items-center justify-center py-12">
             <div className="text-center">
-              <div className="w-8 h-8 border-4 border-purple-500/30 border-t-purple-500 rounded-full animate-spin mx-auto mb-4"></div>
+              <div className="w-8 h-8 border-4 border-green-500/30 border-t-green-500 rounded-full animate-spin mx-auto mb-4"></div>
               <p className="text-gray-400">Analyzing wallet data...</p>
             </div>
           </div>

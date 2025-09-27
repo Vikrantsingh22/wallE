@@ -109,7 +109,7 @@ export default function Leaderboard() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent mb-4">
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent mb-4">
             DeFi Leaderboard
           </h1>
           <p className="text-gray-400 text-lg">
@@ -139,7 +139,7 @@ export default function Leaderboard() {
             disabled={loading}
             className={`px-4 py-2 rounded-lg font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed ${
               sortBy === "totalValue"
-                ? "bg-purple-600 text-white"
+                ? "bg-green-600 text-white border border-green-500/30"
                 : "bg-gray-800 text-gray-300 hover:bg-gray-700"
             }`}
           >
@@ -150,7 +150,7 @@ export default function Leaderboard() {
             disabled={loading}
             className={`px-4 py-2 rounded-lg font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed ${
               sortBy === "totalPnL"
-                ? "bg-purple-600 text-white"
+                ? "bg-green-600 text-white border border-green-500/30"
                 : "bg-gray-800 text-gray-300 hover:bg-gray-700"
             }`}
           >
@@ -161,7 +161,7 @@ export default function Leaderboard() {
         {loading ? (
           <div className="flex items-center justify-center py-12">
             <div className="text-center">
-              <div className="w-8 h-8 border-4 border-purple-500/30 border-t-purple-500 rounded-full animate-spin mx-auto mb-4"></div>
+              <div className="w-8 h-8 border-4 border-green-500/30 border-t-green-500 rounded-full animate-spin mx-auto mb-4"></div>
               <p className="text-gray-400">Loading leaderboard...</p>
             </div>
           </div>
@@ -173,7 +173,7 @@ export default function Leaderboard() {
               <p className="text-gray-500 text-sm mb-4">{error}</p>
               <button
                 onClick={() => fetchLeaderboardData(sortBy)}
-                className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors"
+                className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors border border-green-500/30"
               >
                 Retry
               </button>
