@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { useAccount } from "wagmi";
 import Link from "next/link";
@@ -29,7 +29,7 @@ interface WalletData {
   lastUpdated: string;
 }
 
-export default function Dashboard() {
+function DashboardContent() {
   const [walletData, setWalletData] = useState<WalletData | null>(null);
   const [insights, setInsights] = useState<string>("");
   const [hotRoast, setHotRoast] = useState<string>("");
@@ -204,5 +204,30 @@ export default function Dashboard() {
         )}
       </main>
     </div>
+  );
+}
+
+// Loading component for Suspense fallback
+function DashboardLoading() {
+  return (
+    <div className="min-h-screen bg-gray-900">
+      <Navbar />
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pt-20">
+        <div className="flex items-center justify-center py-12">
+          <div className="text-center">
+            <div className="w-8 h-8 border-4 border-green-500/30 border-t-green-500 rounded-full animate-spin mx-auto mb-4"></div>
+            <p className="text-gray-400">Loading dashboard...</p>
+          </div>
+        </div>
+      </main>
+    </div>
+  );
+}
+
+export default function Dashboard() {
+  return (
+    <Suspense fallback={<DashboardLoading />}>
+      <DashboardContent />
+    </Suspense>
   );
 }
