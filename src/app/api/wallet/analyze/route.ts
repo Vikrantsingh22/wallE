@@ -34,13 +34,10 @@ function calculatePerformance(tokenPerformance: any[]) {
     } else {
       totalPos += token.abs_profit_fiat_period;
     }
-    //console.log(
-      `Token: ${token.contract_address}, PnL: ${token.abs_profit_fiat_period}`
-    );
   }
   //console.log(
-    `Total Positive PnL: ${totalPos}, Total Negative PnL: ${totalNeg}`
-  );
+  //   `Total Positive PnL: ${totalPos}, Total Negative PnL: ${totalNeg}`
+  // );
   const bestToken = tokenPerformance.reduce((best, t) =>
     t.abs_profit_fiat_period > (best?.abs_profit_fiat_period || -Infinity)
       ? t
