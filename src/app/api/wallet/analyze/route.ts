@@ -67,17 +67,22 @@ export async function POST(req: Request) {
         oneInch.getTokenPerformance(address),
       ]);
 
-      const analyzedTransactions = txHistory.items.map((tx: any) => {
+      // Safely extract data with fallbacks
+      const transactions = txHistory?.items || [];
+      const portfolioData = portfolioValue?.result || { total: 0 };
+      const tokenData = tokenPerformance?.result || [];
+
+      const analyzedTransactions = transactions.map((tx: any) => {
         const { riskScore, riskFlags } = riskAnalysis.analyzeTransaction(tx);
         return { ...tx, riskScore, riskFlags };
       });
 
-      const performance = calculatePerformance(tokenPerformance);
+      const performance = calculatePerformance(tokenData);
       const walletRisk = riskAnalysis.assessWalletRisk(analyzedTransactions);
 
       const walletData = {
         address,
-        totalValue: portfolioValue.result?.total || 0,
+        totalValue: portfolioData.total || 0,
         transactions: analyzedTransactions,
         riskAssessment: walletRisk,
         performance,

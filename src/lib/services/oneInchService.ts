@@ -1,39 +1,73 @@
+import axios from "axios";
 export class OneInchService {
   baseURL = "https://api.1inch.dev";
   apiKey = process.env.ONEINCH_API_KEY!;
-  headers = {
-    Authorization: `Bearer ${this.apiKey}`,
-    accept: "application/json",
-    "content-type": "application/json",
-  };
+  headers: Record<string, string>;
+
+  constructor() {
+    if (!this.apiKey) {
+      console.warn(
+        "ONEINCH_API_KEY environment variable is not set. API calls may fail."
+      );
+    }
+
+    this.headers = {
+      Authorization: `Bearer ${this.apiKey}`,
+      accept: "application/json",
+      "content-type": "application/json",
+    };
+  }
 
   async getTransactionHistory(address: string, limit = 50) {
-    const res = await fetch(
-      `${this.baseURL}/history/v2.0/history/${address}/events`,
-      {
-        method: "POST",
-        headers: this.headers,
-        body: JSON.stringify({
-          filter: { chain_ids: ["1"], limit },
-        }),
-      }
-    );
-    return res.json();
+    try {
+      const res = await axios.post(
+        `${this.baseURL}/history/v2.0/history/${address}/events`,
+        {
+          headers: this.headers,
+          data: {
+            filter: { chain_ids: ["1"], limit },
+          },
+        }
+      );
+
+      const data = res.data;
+      console.log("Transaction History Data:", data);
+      return data || { items: [] }; // Return empty items array if no data
+    } catch (error) {
+      console.error("getTransactionHistory error:", error);
+      return { items: [] }; // Return fallback data
+    }
   }
 
   async getPortfolioValue(address: string) {
-    const res = await fetch(
-      `${this.baseURL}/portfolio/portfolio/v5.0/general/current_value?addresses=${address}&chain_id=1`,
-      { headers: this.headers }
-    );
-    return res.json();
+    try {
+      const res = await axios.get(
+        `${this.baseURL}/portfolio/portfolio/v5.0/general/current_value?addresses=${address}&chain_id=1`,
+        { headers: this.headers }
+      );
+
+      const data = res.data;
+      console.log("Portfolio Value Data:", data);
+      return data || { result: { total: 0 } }; // Return fallback data
+    } catch (error) {
+      console.error("getPortfolioValue error:", error);
+      return { result: { total: 0 } }; // Return fallback data
+    }
   }
 
   async getTokenPerformance(address: string) {
-    const res = await fetch(
-      `${this.baseURL}/portfolio/portfolio/v5.0/wallet/tokens?chain_id=1&address=${address}`,
-      { headers: this.headers }
-    );
-    return res.json();
+    try {
+      const res = await axios.get(
+        `${this.baseURL}/portfolio/portfolio/v5.0/wallet/tokens?chain_id=1&address=${address}`,
+        { headers: this.headers }
+      );
+
+      const data = res.data;
+      console.log("Token Performance Data:", data);
+      return data || { result: [] }; // Return fallback data
+    } catch (error) {
+      console.error("getTokenPerformance error:", error);
+      return { result: [] }; // Return fallback data
+    }
   }
 }
