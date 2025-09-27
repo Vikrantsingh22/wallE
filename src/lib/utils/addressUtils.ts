@@ -17,7 +17,7 @@ export function shortenAddress(
   if (!address || address.length < startChars + endChars) {
     return address;
   }
-  
+
   return `${address.slice(0, startChars)}...${address.slice(-endChars)}`;
 }
 
@@ -31,10 +31,11 @@ export function getEtherscanUrl(
   address: string,
   network: string = "mainnet"
 ): string {
-  const baseUrl = network === "mainnet" 
-    ? "https://etherscan.io" 
-    : `https://${network}.etherscan.io`;
-  
+  const baseUrl =
+    network === "mainnet"
+      ? "https://etherscan.io"
+      : `https://${network}.etherscan.io`;
+
   return `${baseUrl}/address/${address}`;
 }
 

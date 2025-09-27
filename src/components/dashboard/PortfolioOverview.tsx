@@ -1,7 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { shortenAddress, getEtherscanUrl, isValidAddress } from "@/lib/utils/addressUtils";
+import {
+  shortenAddress,
+  getEtherscanUrl,
+  isValidAddress,
+} from "@/lib/utils/addressUtils";
 
 interface PortfolioOverviewProps {
   totalValue: number;
@@ -73,7 +77,9 @@ export default function PortfolioOverview({
           <div className="flex justify-between items-center">
             <span className="text-gray-400 text-sm md:text-base">24h P&L</span>
             <span
-              className={`font-semibold text-sm md:text-base ${getPnLColor(performance.dailyPnL)}`}
+              className={`font-semibold text-sm md:text-base ${getPnLColor(
+                performance.dailyPnL
+              )}`}
             >
               {performance.dailyPnL > 0 ? "+" : ""}
               {formatCurrency(performance.dailyPnL)}
@@ -82,7 +88,9 @@ export default function PortfolioOverview({
           <div className="flex justify-between items-center">
             <span className="text-gray-400 text-sm md:text-base">7d P&L</span>
             <span
-              className={`font-semibold text-sm md:text-base ${getPnLColor(performance.weeklyPnL)}`}
+              className={`font-semibold text-sm md:text-base ${getPnLColor(
+                performance.weeklyPnL
+              )}`}
             >
               {performance.weeklyPnL > 0 ? "+" : ""}
               {formatCurrency(performance.weeklyPnL)}
@@ -91,7 +99,9 @@ export default function PortfolioOverview({
           <div className="flex justify-between items-center">
             <span className="text-gray-400 text-sm md:text-base">30d P&L</span>
             <span
-              className={`font-semibold text-sm md:text-base ${getPnLColor(performance.monthlyPnL)}`}
+              className={`font-semibold text-sm md:text-base ${getPnLColor(
+                performance.monthlyPnL
+              )}`}
             >
               {performance.monthlyPnL > 0 ? "+" : ""}
               {formatCurrency(performance.monthlyPnL)}
@@ -123,9 +133,12 @@ export default function PortfolioOverview({
 
           <div className="space-y-2">
             <div className="flex justify-between items-center min-h-[2rem]">
-              <span className="text-gray-400 text-xs md:text-sm">Best Performer</span>
+              <span className="text-gray-400 text-xs md:text-sm">
+                Best Performer
+              </span>
               <div className="flex items-center space-x-1 md:space-x-2 flex-shrink-0">
-                {performance.bestPerformer && isValidAddress(performance.bestPerformer) ? (
+                {performance.bestPerformer &&
+                isValidAddress(performance.bestPerformer) ? (
                   <>
                     <span className="text-green-400 font-medium text-xs md:text-sm font-mono">
                       {shortenAddress(performance.bestPerformer)}
@@ -160,9 +173,12 @@ export default function PortfolioOverview({
               </div>
             </div>
             <div className="flex justify-between items-center min-h-[2rem]">
-              <span className="text-gray-400 text-xs md:text-sm">Worst Performer</span>
+              <span className="text-gray-400 text-xs md:text-sm">
+                Worst Performer
+              </span>
               <div className="flex items-center space-x-1 md:space-x-2 flex-shrink-0">
-                {performance.worstPerformer && isValidAddress(performance.worstPerformer) ? (
+                {performance.worstPerformer &&
+                isValidAddress(performance.worstPerformer) ? (
                   <>
                     <span className="text-red-400 font-medium text-xs md:text-sm font-mono">
                       {shortenAddress(performance.worstPerformer)}
