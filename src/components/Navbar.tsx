@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { Disclosure } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
@@ -29,13 +30,22 @@ export default function Navbar() {
               <div className="flex h-16 items-center justify-between">
                 <div className="flex items-center">
                   <div className="flex-shrink-0">
-                    <Link href="/" className="flex items-center space-x-2">
+                    <Link href="/" className="flex items-center space-x-3">
                       <motion.div
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
-                        className="bg-gradient-to-r from-green-600 to-emerald-600 text-white font-bold text-xl px-3 py-1 rounded-lg border border-green-500/20"
+                        className="flex items-center space-x-2"
                       >
-                        wallE
+                        <Image
+                          src="/logo.png"
+                          alt="WallE Logo"
+                          width={32}
+                          height={32}
+                          className="rounded-lg"
+                        />
+                        <span className="text-white font-bold text-xl">
+                          WallE
+                        </span>
                       </motion.div>
                     </Link>
                   </div>

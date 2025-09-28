@@ -83,10 +83,10 @@ export default function HeroSection() {
           transition={{ duration: 0.8 }}
         >
           <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-white via-gray-200 to-green-200 bg-clip-text text-transparent mb-6">
-            Smart Wallet
+            WallE
             <br />
             <span className="bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">
-              Analytics
+              DeFi Analytics Redefined
             </span>
           </h1>
 
@@ -96,9 +96,8 @@ export default function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            Professional-grade portfolio analysis and performance tracking. Get
-            institutional-level insights, risk assessments, and compete with
-            peers in the most sophisticated DeFi analytics platform.
+            Turn your wallet into a DeFi game get insights, risk assessments
+            leaderboards & spicy AI roasts.
           </motion.p>
 
           <motion.div

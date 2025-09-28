@@ -17,6 +17,9 @@ export const metadata: Metadata = {
   title: "WallE - Social DeFi Platform",
   description:
     "Analyze your wallet, discover insights, and compete with friends on the ultimate DeFi social platform.",
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({
