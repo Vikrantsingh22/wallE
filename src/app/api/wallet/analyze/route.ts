@@ -50,9 +50,9 @@ function calculatePerformance(tokenPerformance: any[]) {
   );
   return {
     totalPnL,
-    dailyPnL: totalPnL / 30,
-    weeklyPnL: totalPnL / 4,
-    monthlyPnL: totalPnL,
+    dailyPnL: totalPnL / 365,
+    weeklyPnL: totalPnL / 52,
+    monthlyPnL: totalPnL / 12,
     bestPerformer: bestToken?.contract_address || "N/A",
     worstPerformer: worstToken?.contract_address || "N/A",
   };

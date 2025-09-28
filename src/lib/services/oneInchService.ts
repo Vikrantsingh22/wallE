@@ -23,10 +23,10 @@ export class OneInchService {
       const res = await axios.post(
         `${this.baseURL}/history/v2.0/history/${address}/events`,
         {
+          filter: { chain_ids: ["1"], limit },
+        },
+        {
           headers: this.headers,
-          data: {
-            filter: { chain_ids: ["1"], limit },
-          },
         }
       );
 

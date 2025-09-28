@@ -66,7 +66,8 @@ export default function PerformanceChart({
               value >= 0 ? "text-green-400" : "text-red-400"
             }`}
           >
-            P&L: {value >= 0 ? "+" : ""}${value.toFixed(2)}
+            Quantity: {""}
+            {value.toFixed(2)}
           </p>
         </div>
       );
@@ -85,7 +86,7 @@ export default function PerformanceChart({
     >
       <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 md:mb-6 space-y-2 sm:space-y-0">
         <h3 className="text-base md:text-lg font-semibold text-white">
-          30-Day P&L Performance
+          P&L Performance
         </h3>
         <div className="flex items-center space-x-4">
           <div className="text-right">
@@ -135,7 +136,7 @@ export default function PerformanceChart({
               fontSize={12}
               tickLine={false}
               axisLine={false}
-              tickFormatter={(value) => `$${value.toFixed(0)}`}
+              tickFormatter={(value) => `${value.toFixed(0)}`}
             />
             <Tooltip content={<CustomTooltip />} />
             <Area
@@ -150,41 +151,7 @@ export default function PerformanceChart({
       </div>
 
       {/* Performance indicators */}
-      <div className="grid grid-cols-3 gap-2 md:gap-4 mt-4 md:mt-6 pt-3 md:pt-4 border-t border-gray-700">
-        <div className="text-center">
-          <div
-            className={`text-sm md:text-lg font-bold ${
-              performance.dailyPnL >= 0 ? "text-green-400" : "text-red-400"
-            }`}
-          >
-            {performance.dailyPnL >= 0 ? "+" : ""}$
-            {performance.dailyPnL.toFixed(2)}
-          </div>
-          <div className="text-gray-400 text-xs md:text-sm">24h</div>
-        </div>
-        <div className="text-center">
-          <div
-            className={`text-sm md:text-lg font-bold ${
-              performance.weeklyPnL >= 0 ? "text-green-400" : "text-red-400"
-            }`}
-          >
-            {performance.weeklyPnL >= 0 ? "+" : ""}$
-            {performance.weeklyPnL.toFixed(2)}
-          </div>
-          <div className="text-gray-400 text-xs md:text-sm">7d</div>
-        </div>
-        <div className="text-center">
-          <div
-            className={`text-sm md:text-lg font-bold ${
-              performance.monthlyPnL >= 0 ? "text-green-400" : "text-red-400"
-            }`}
-          >
-            {performance.monthlyPnL >= 0 ? "+" : ""}$
-            {performance.monthlyPnL.toFixed(2)}
-          </div>
-          <div className="text-gray-400 text-xs md:text-sm">30d</div>
-        </div>
-      </div>
+      <div className="grid grid-cols-3 gap-2 md:gap-4 mt-4 md:mt-6 pt-3 md:pt-4 border-t border-gray-700"></div>
     </motion.div>
   );
 }
